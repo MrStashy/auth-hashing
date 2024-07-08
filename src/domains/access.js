@@ -10,4 +10,13 @@ async function registerDb (username, password) {
     })
 }
 
-module.exports = { registerDb }
+async function getUserDb (username) {
+    return await prisma.user.findUniqueOrThrow({
+        where: {
+            username: username
+        }
+    })
+}
+
+
+module.exports = { registerDb, getUserDb }
