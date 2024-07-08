@@ -6,11 +6,20 @@ const prisma = new PrismaClient();
 const { registerDb, getUserDb } = require("./domains/access");
 const router = express.Router();
 
+
+
+
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   const hashedPass = await bcrypt.hash(password, 8);
+  try {
   const user = await registerDb(username, hashedPass);
-  res.status(200).json({ user });
+  return res.status(200).json({ user });
+  } catch(e) {
+    if(e.code === 'P2002') {
+      return res.status(400).json({ error: "A user already exists with that name" })
+    }
+  }
 });
 
 router.post("/login", async (req, res) => {

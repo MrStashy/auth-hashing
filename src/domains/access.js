@@ -7,7 +7,7 @@ async function registerDb (username, password) {
             username: username,
             password: password
         }
-    })
+    }) 
 }
 
 async function getUserDb (username) {
